@@ -49,7 +49,7 @@ export default function NewFormForm() {
       <div>
         <label
           htmlFor="title"
-          className="mb-2 block text-sm font-medium"
+          className="mb-2 block text-sm font-medium text-gray-900"
         >
           Title
         </label>
@@ -60,7 +60,7 @@ export default function NewFormForm() {
           value={title}
           onChange={(event) => setTitle(event.target.value)}
           placeholder="Customer Feedback"
-          className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none focus:border-black"
           required
         />
       </div>
@@ -68,7 +68,7 @@ export default function NewFormForm() {
       <div>
         <label
           htmlFor="description"
-          className="mb-2 block text-sm font-medium"
+          className="mb-2 block text-sm font-medium text-gray-900"
         >
           Description
         </label>
@@ -79,7 +79,7 @@ export default function NewFormForm() {
           onChange={(event) => setDescription(event.target.value)}
           placeholder="Tell us what you think about our service"
           rows={4}
-          className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none focus:border-black"
         />
       </div>
 

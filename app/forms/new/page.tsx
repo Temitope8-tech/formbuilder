@@ -15,10 +15,10 @@ export default async function NewFormPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50 text-gray-900">
       <div className="mx-auto max-w-2xl px-6 py-16">
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold">
+          <h1 className="text-3xl font-semibold text-gray-900">
             Create a new form
           </h1>
 
