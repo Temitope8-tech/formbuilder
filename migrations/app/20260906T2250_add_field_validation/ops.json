@@ -1,0 +1,170 @@
+[
+  {
+    "id": "column.public.formField.maxLength",
+    "label": "Add column \"maxLength\" to \"formField\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "maxLength",
+        "table": "formField"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"maxLength\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "formField",
+          "maxLength"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"maxLength\"",
+        "sql": "ALTER TABLE \"public\".\"formField\" ADD COLUMN \"maxLength\" int4"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"maxLength\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "formField",
+          "maxLength"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.formField.maxValue",
+    "label": "Add column \"maxValue\" to \"formField\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "maxValue",
+        "table": "formField"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"maxValue\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "formField",
+          "maxValue"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"maxValue\"",
+        "sql": "ALTER TABLE \"public\".\"formField\" ADD COLUMN \"maxValue\" float8"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"maxValue\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "formField",
+          "maxValue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.formField.minLength",
+    "label": "Add column \"minLength\" to \"formField\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "minLength",
+        "table": "formField"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"minLength\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "formField",
+          "minLength"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"minLength\"",
+        "sql": "ALTER TABLE \"public\".\"formField\" ADD COLUMN \"minLength\" int4"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"minLength\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "formField",
+          "minLength"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.formField.minValue",
+    "label": "Add column \"minValue\" to \"formField\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "minValue",
+        "table": "formField"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"minValue\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "formField",
+          "minValue"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"minValue\"",
+        "sql": "ALTER TABLE \"public\".\"formField\" ADD COLUMN \"minValue\" float8"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"minValue\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "formField",
+          "minValue"
+        ]
+      }
+    ]
+  }
+]

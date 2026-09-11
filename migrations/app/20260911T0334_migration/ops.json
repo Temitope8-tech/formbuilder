@@ -1,0 +1,125 @@
+[
+  {
+    "id": "table.fileAttachment",
+    "label": "Create table \"fileAttachment\"",
+    "summary": "Creates table \"fileAttachment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "fileAttachment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"fileAttachment\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"fileAttachment\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"fileAttachment\"",
+        "sql": "CREATE TABLE \"public\".\"fileAttachment\" (\n  \"answerId\" text NOT NULL,\n  \"contentType\" text NOT NULL,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"fileName\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"size\" int4 NOT NULL,\n  \"storagePath\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"fileAttachment\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"fileAttachment\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.fileAttachment.fileAttachment_answerId_key",
+    "label": "Add unique constraint on \"fileAttachment\" (answerId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "fileAttachment_answerId_key",
+        "table": "fileAttachment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"fileAttachment_answerId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "fileAttachment_answerId_key",
+          "public",
+          "\"public\".\"fileAttachment\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"fileAttachment_answerId_key\"",
+        "sql": "ALTER TABLE \"public\".\"fileAttachment\" ADD CONSTRAINT \"fileAttachment_answerId_key\" UNIQUE (\"answerId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"fileAttachment_answerId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "fileAttachment_answerId_key",
+          "public",
+          "\"public\".\"fileAttachment\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.fileAttachment.fileAttachment_answerId_fkey",
+    "label": "Add foreign key \"fileAttachment_answerId_fkey\" on \"fileAttachment\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "fileAttachment_answerId_fkey",
+        "table": "fileAttachment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"fileAttachment_answerId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "fileAttachment_answerId_fkey",
+          "public",
+          "\"public\".\"fileAttachment\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"fileAttachment_answerId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"fileAttachment\"\nADD CONSTRAINT \"fileAttachment_answerId_fkey\"\nFOREIGN KEY (\"answerId\")\nREFERENCES \"public\".\"answer\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"fileAttachment_answerId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "fileAttachment_answerId_fkey",
+          "public",
+          "\"public\".\"fileAttachment\""
+        ]
+      }
+    ]
+  }
+]

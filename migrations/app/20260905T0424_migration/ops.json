@@ -1,0 +1,365 @@
+[
+  {
+    "id": "table.answer",
+    "label": "Create table \"answer\"",
+    "summary": "Creates table \"answer\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "answer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"answer\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"answer\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"answer\"",
+        "sql": "CREATE TABLE \"public\".\"answer\" (\n  \"fieldId\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"submissionId\" text NOT NULL,\n  \"value\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"answer\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"answer\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.submission",
+    "label": "Create table \"submission\"",
+    "summary": "Creates table \"submission\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "submission"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"submission\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"submission\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"submission\"",
+        "sql": "CREATE TABLE \"public\".\"submission\" (\n  \"formId\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"submittedAt\" timestamptz DEFAULT (now()) NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"submission\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"submission\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.formField.options",
+    "label": "Add column \"options\" to \"formField\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "options",
+        "table": "formField"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"options\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "formField",
+          "options"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"options\"",
+        "sql": "ALTER TABLE \"public\".\"formField\" ADD COLUMN \"options\" json"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"options\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "formField",
+          "options"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.answer.answer_fieldId_idx_44d815d7",
+    "label": "Create index \"answer_fieldId_idx_44d815d7\" on \"answer\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "answer_fieldId_idx_44d815d7",
+        "table": "answer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"answer_fieldId_idx_44d815d7\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"answer_fieldId_idx_44d815d7\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"answer_fieldId_idx_44d815d7\"",
+        "sql": "CREATE INDEX \"answer_fieldId_idx_44d815d7\" ON \"public\".\"answer\" (\"fieldId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"answer_fieldId_idx_44d815d7\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"answer_fieldId_idx_44d815d7\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.answer.answer_submissionId_idx_89cd3f4e",
+    "label": "Create index \"answer_submissionId_idx_89cd3f4e\" on \"answer\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "answer_submissionId_idx_89cd3f4e",
+        "table": "answer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"answer_submissionId_idx_89cd3f4e\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"answer_submissionId_idx_89cd3f4e\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"answer_submissionId_idx_89cd3f4e\"",
+        "sql": "CREATE INDEX \"answer_submissionId_idx_89cd3f4e\" ON \"public\".\"answer\" (\"submissionId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"answer_submissionId_idx_89cd3f4e\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"answer_submissionId_idx_89cd3f4e\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.submission.submission_formId_idx_3c13a9fa",
+    "label": "Create index \"submission_formId_idx_3c13a9fa\" on \"submission\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "submission_formId_idx_3c13a9fa",
+        "table": "submission"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"submission_formId_idx_3c13a9fa\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"submission_formId_idx_3c13a9fa\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"submission_formId_idx_3c13a9fa\"",
+        "sql": "CREATE INDEX \"submission_formId_idx_3c13a9fa\" ON \"public\".\"submission\" (\"formId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"submission_formId_idx_3c13a9fa\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"submission_formId_idx_3c13a9fa\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.answer.answer_submissionId_fkey",
+    "label": "Add foreign key \"answer_submissionId_fkey\" on \"answer\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "answer_submissionId_fkey",
+        "table": "answer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"answer_submissionId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "answer_submissionId_fkey",
+          "public",
+          "\"public\".\"answer\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"answer_submissionId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"answer\"\nADD CONSTRAINT \"answer_submissionId_fkey\"\nFOREIGN KEY (\"submissionId\")\nREFERENCES \"public\".\"submission\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"answer_submissionId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "answer_submissionId_fkey",
+          "public",
+          "\"public\".\"answer\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.answer.answer_fieldId_fkey",
+    "label": "Add foreign key \"answer_fieldId_fkey\" on \"answer\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "answer_fieldId_fkey",
+        "table": "answer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"answer_fieldId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "answer_fieldId_fkey",
+          "public",
+          "\"public\".\"answer\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"answer_fieldId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"answer\"\nADD CONSTRAINT \"answer_fieldId_fkey\"\nFOREIGN KEY (\"fieldId\")\nREFERENCES \"public\".\"formField\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"answer_fieldId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "answer_fieldId_fkey",
+          "public",
+          "\"public\".\"answer\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.submission.submission_formId_fkey",
+    "label": "Add foreign key \"submission_formId_fkey\" on \"submission\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "submission_formId_fkey",
+        "table": "submission"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"submission_formId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "submission_formId_fkey",
+          "public",
+          "\"public\".\"submission\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"submission_formId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"submission\"\nADD CONSTRAINT \"submission_formId_fkey\"\nFOREIGN KEY (\"formId\")\nREFERENCES \"public\".\"form\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"submission_formId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "submission_formId_fkey",
+          "public",
+          "\"public\".\"submission\""
+        ]
+      }
+    ]
+  }
+]
